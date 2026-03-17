@@ -84,15 +84,16 @@ DSA210Project-Spring-26/
 │   ├── merge_with_trends.py
 │   ├── fill_trends.py
 │   ├── feature_engineering.py
-│   ├── eda.py
-│   ├── plots.py
-│   ├── hypothesis_test.py
-│   ├── ml_model.py
-│   ├── ml_compare.py
 │   ├── results_table.py
 │   └── results_plot.py
 │
 ├── notebooks/
+│   ├── eda.py
+│   ├── hypothesis_test.py
+│   ├── ml_model.py
+│   ├── ml_compare.py
+│   └── plots.py
+│
 ├── README.md
 └── requirements.txt
 ```
