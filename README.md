@@ -24,8 +24,8 @@ The project currently includes:
 ## Repository Structure
 ```text
 DSA210Project-Spring-26/
-├── Data/                      # existing data folder in the public repo
-├── data/                      # local working folder used during analysis
+├── notebooks/                     
+├── data/                      
 ├── src/                       # Python scripts for preprocessing and modeling
 ├── README.md
 └── requirements.txt
