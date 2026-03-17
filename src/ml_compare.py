@@ -1,9 +1,13 @@
+from pathlib import Path
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 
-df = pd.read_csv("data/bitcoin_features.csv")
+ROOT = Path(__file__).resolve().parents[1]
+in_path = ROOT / "data" / "processed" / "bitcoin_features.csv"
+
+df = pd.read_csv(in_path)
 
 market_features = [
     "price",
@@ -11,16 +15,15 @@ market_features = [
     "total_volume",
     "daily_return",
     "volatility_7d",
-    "price_change"
+    "price_change",
 ]
 
 all_features = market_features + [
     "google_trends_score",
-    "trends_change"
+    "trends_change",
 ]
 
 target = "target_up_next_day"
-
 df = df.dropna(subset=all_features + [target])
 
 split_index = int(len(df) * 0.8)
@@ -37,7 +40,7 @@ def evaluate(features, model, label):
     preds = model.predict(X_test)
     acc = accuracy_score(y_test, preds)
 
-    print(f"{label}")
+    print(label)
     print("Features:", features)
     print("Accuracy:", acc)
     print("-" * 50)
