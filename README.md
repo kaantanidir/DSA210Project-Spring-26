@@ -210,7 +210,6 @@ However, Google Trends does appear to be associated with increased market volati
 
 ---
 
-## Note on notebooks/
-The `notebooks/` folder is currently a placeholder. It should either:
-- include at least one notebook summarizing the full workflow, or
-- be removed until notebooks are added.
+
+https://www.coingecko.com/price_charts/export/bitcoin/usd.csv 
+https://trends.google.com/trends/api/widgetdata/multiline/csv?req=%7B%22time%22%3A%222021-03-17%202026-03-17%22%2C%22resolution%22%3A%22WEEK%22%2C%22locale%22%3A%22en-US%22%2C%22comparisonItem%22%3A%5B%7B%22geo%22%3A%7B%7D%2C%22complexKeywordsRestriction%22%3A%7B%22keyword%22%3A%5B%7B%22type%22%3A%22BROAD%22%2C%22value%22%3A%22bitcoin%22%7D%5D%7D%7D%5D%2C%22requestOptions%22%3A%7B%22property%22%3A%22%22%2C%22backend%22%3A%22IZG%22%2C%22category%22%3A0%7D%2C%22userConfig%22%3A%7B%22userType%22%3A%22USER_TYPE_LEGIT_USER%22%7D%7D&token=ANF58QkAAAAAabqsuMiHHE_Fr-8xmboL-k7LZ7KC61bu&tz=-180
