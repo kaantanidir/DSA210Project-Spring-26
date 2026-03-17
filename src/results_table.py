@@ -19,14 +19,15 @@ results = pd.DataFrame({
         "With Trends",
     ],
     "Accuracy": [
-        0.48723404255319147,
-        0.48723404255319147,
-        0.5074468085106383,
-        0.5085106382978724,
+        0.5095890410958904,
+        0.5095890410958904,
+        0.4904109589041096,
+        0.4849315068493151,
     ],
 })
 
 out_path = OUTPUT_DIR / "ml_results_summary.csv"
 results.to_csv(out_path, index=False)
+
 print(results)
 print(f"Saved to {out_path}")

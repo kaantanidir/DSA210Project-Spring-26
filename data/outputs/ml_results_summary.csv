@@ -1,0 +1,5 @@
+Model,Feature Set,Accuracy
+Logistic Regression,Baseline,0.5095890410958904
+Logistic Regression,With Trends,0.5095890410958904
+Random Forest,Baseline,0.4904109589041096
+Random Forest,With Trends,0.4849315068493151

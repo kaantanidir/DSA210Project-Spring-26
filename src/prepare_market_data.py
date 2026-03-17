@@ -30,6 +30,7 @@ df["volatility_7d"] = df["daily_return"].rolling(7).std()
 df["ma_7"] = df["price"].rolling(7).mean()
 df["ma_30"] = df["price"].rolling(30).mean()
 df["volume_change"] = df["total_volume"].pct_change()
+df["volume_change"] = df["volume_change"].replace([float("inf"), float("-inf")], pd.NA)
 
 df.to_csv(out_path, index=False)
 print(f"Saved to {out_path}")
