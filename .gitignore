@@ -1,6 +1,20 @@
+# Python
 .venv/
+venv/
 __pycache__/
 *.pyc
+
+# Notebook / OS
 .ipynb_checkpoints/
 .DS_Store
 Thumbs.db
+
+# Local IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Git internals should never be manually copied around
+.git/
