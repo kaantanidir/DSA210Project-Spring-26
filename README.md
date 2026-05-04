@@ -340,10 +340,19 @@ Based on peer feedback, the project was strengthened in three main ways:
 
 ## References
 
-- CoinGecko historical Bitcoin market data.
-- Google Trends search interest data for the keyword “Bitcoin”.
-- Alternative.me Crypto Fear & Greed Index.
+- **CoinGecko. Bitcoin historical market data.**  
+  Bitcoin market data was downloaded from CoinGecko as a CSV file using the maximum available historical range. The raw file covers 2013-04-28 to 2026-03-17 and includes daily price, market capitalization, and total trading volume. The final analysis period begins later because the dataset is restricted to dates with available Google Trends data.  
+  Source: https://www.coingecko.com/en/coins/bitcoin/historical_data
 
+- **Google Trends. Search interest data for the keyword “Bitcoin”.**  
+  Google Trends data was manually downloaded for the keyword “Bitcoin” and used as a proxy for public attention. Since the exported Google Trends data is weekly, it was forward-filled to align with daily Bitcoin market observations.  
+  Source: https://trends.google.com/
+
+- **Alternative.me. Crypto Fear & Greed Index.**  
+  The Alternative.me Crypto Fear & Greed Index was used as a sentiment-based enrichment source. The data was downloaded through the public API using `src/fetch_fear_greed.py`.  
+  Source: https://alternative.me/crypto/fear-and-greed-index/  
+  API used in this project: https://api.alternative.me/fng/?limit=0&format=json
+  
 ---
 
 ## AI Usage Disclosure
