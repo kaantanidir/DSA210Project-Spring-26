@@ -1,101 +1,143 @@
-# DSA210 Project — Can Google Trends Help Predict Short-Term Bitcoin Direction?
+# DSA210 Project — Public Attention, Market Sentiment, and Short-Term Bitcoin Market Behavior
 
 ## Project Overview
-This project investigates whether online public attention, measured through Google Trends, can improve short-term Bitcoin price direction prediction.
+
+This project investigates whether public attention and market sentiment indicators can help explain short-term Bitcoin market behavior.
+
+The project combines historical Bitcoin market data, Google Trends search-interest data, and the Alternative.me Crypto Fear & Greed Index. The analysis evaluates whether attention- and sentiment-based variables improve next-day Bitcoin direction prediction and whether they are more strongly associated with Bitcoin volatility.
 
 The main research question is:
 
-**Can Google Trends data meaningfully improve next-day Bitcoin up/down prediction compared with market-only models?**
+**Can public attention and market sentiment indicators improve short-term Bitcoin direction prediction and help explain Bitcoin market volatility?**
 
-The project combines historical Bitcoin market data with Google Trends search-interest data, performs preprocessing and feature engineering, and evaluates the relationship using exploratory data analysis, hypothesis testing, and machine learning models.
+The project follows the full data science pipeline: data collection, preprocessing, feature engineering, exploratory data analysis, hypothesis testing, machine learning, visualization, and interpretation.
 
 ---
 
 ## Motivation
-Bitcoin is one of the most attention-driven financial assets, and public interest often changes rapidly during volatile market periods. This project explores whether public attention, approximated by Google Trends search activity, carries predictive information about short-term Bitcoin market movements.
 
-More specifically, the goal is to test whether adding Google Trends data to market-based variables improves next-day Bitcoin direction prediction.
+Bitcoin is one of the most visible and volatile financial assets. Its price behavior may be influenced not only by market variables, but also by public attention and investor sentiment. Search behavior and market sentiment indices may therefore help explain periods of volatility, fear, greed, and market turbulence.
+
+This project tests whether these external indicators provide useful information beyond standard market-based variables.
 
 ---
 
 ## Main Findings
-The current results suggest that **Google Trends variables do not meaningfully improve next-day Bitcoin direction prediction**.
+
+The results suggest that predicting next-day Bitcoin direction remains difficult, even after adding public attention and sentiment-based variables.
 
 ### Statistical findings
-- Correlation between `google_trends_score` and `daily_return`: **-0.0813**  
-  - p-value: **0.0005**
-- Correlation between `google_trends_score` and `volatility_7d`: **0.4966**  
-  - p-value: **< 0.001**
-- Difference in daily return between high-trend and low-trend days:
-  - t-statistic: **-0.5404**
-  - p-value: **0.5890**
+
+The strongest statistical relationship was observed between Google Trends and 7-day Bitcoin volatility. This suggests that public search attention is more closely related to market turbulence than to next-day directional returns.
+
+Fear & Greed Index provided an additional sentiment-based enrichment layer. However, lagged sentiment features did not show strong standalone predictive power for next-day Bitcoin direction.
 
 ### Machine learning findings
-| Model | Feature Set | Accuracy |
-|---|---|---:|
-| Logistic Regression | Baseline (market only) | 0.5096 |
-| Logistic Regression | With Google Trends | 0.5096 |
-| Random Forest | Baseline (market only) | 0.4904 |
-| Random Forest | With Google Trends | 0.4849 |
+
+The machine learning models showed limited predictive performance for next-day Bitcoin direction. The best F1-scores were approximately in the 0.49–0.55 range, indicating that short-term Bitcoin direction remains difficult to classify reliably.
+
+The final model comparison includes:
+
+- market-only models,
+- Google Trends-only models,
+- Fear & Greed-only models,
+- market + Google Trends models,
+- market + Fear & Greed models,
+- market + Google Trends + Fear & Greed models.
+
+Detailed results are available in:
+
+```text
+data/outputs/ml_results_summary.csv
+reports/ml_results_summary.md
+reports/ml_detailed_report.md
+```
 
 ### Interpretation
-- Google Trends had a **weak negative association** with daily returns.
-- Google Trends had a **moderate positive association** with volatility.
-- Adding Google Trends variables did **not improve** prediction accuracy.
-- In Random Forest, adding Google Trends slightly **reduced** performance.
 
-These findings suggest that Google Trends may be more closely related to **attention and market turbulence** than to **short-term directional returns**.
+Overall, Google Trends and Fear & Greed Index appear more useful for understanding attention, sentiment, and volatility behavior than for producing strong next-day directional forecasts.
 
 ---
 
 ## Data Sources
 
 ### 1. CoinGecko
-Used for:
-- Bitcoin price
-- market capitalization
-- total trading volume
 
-This dataset was collected from CoinGecko historical export data and stored as:
-- `data/raw/btc-usd-max.csv`
+Used for:
+
+- Bitcoin price,
+- market capitalization,
+- total trading volume.
+
+The raw file is stored as:
+
+```text
+data/raw/btc-usd-max.csv
+```
 
 ### 2. Google Trends
-Used for:
-- search interest for the keyword **Bitcoin**
-- proxy for public attention
 
-This dataset was collected from Google Trends weekly search-interest data and stored as:
-- `data/raw/google_trends_bitcoin.csv`
+Used as a proxy for public attention toward Bitcoin.
 
-### Data enrichment
-In accordance with the course project requirement of enriching a public dataset with an additional data source, this project combines:
-- **Bitcoin market data** from CoinGecko
-- **public attention data** from Google Trends
+The raw file is stored as:
 
-This enrichment allows testing whether attention-based variables provide information beyond standard market indicators.
+```text
+data/raw/google_trends_bitcoin.csv
+```
+
+Because the exported Google Trends data is weekly, the values are aligned with daily Bitcoin market observations and forward-filled within the available Google Trends period.
+
+### 3. Alternative.me Crypto Fear & Greed Index
+
+Used as a market sentiment indicator. The index provides a daily sentiment score between 0 and 100, where lower values indicate fear and higher values indicate greed.
+
+The Fear & Greed data is downloaded using:
+
+```text
+src/fetch_fear_greed.py
+```
+
+and saved as:
+
+```text
+data/raw/fear_greed_index_raw.csv
+data/outputs/fear_greed_index.csv
+```
+
+The original proposal focused on CoinGecko and Google Trends. After peer feedback and API reproducibility concerns with GDELT, the final project was extended with the Alternative.me Crypto Fear & Greed Index as a stable sentiment-based enrichment source.
 
 ---
 
 ## Data Analysis
-The project currently includes the following stages of analysis:
 
-1. **Data collection and cleaning**  
-   Historical Bitcoin market data and weekly Google Trends data were collected and cleaned.
+The project includes the following stages:
 
-2. **Data merging and preprocessing**  
-   The two sources were merged on date, and weekly trend values were aligned with daily market observations.
+1. **Market data preparation**  
+   The raw CoinGecko data is cleaned and converted into a daily Bitcoin market dataset.
 
-3. **Feature engineering**  
-   Features such as daily returns, rolling volatility, trend changes, and next-day direction labels were created.
+2. **Google Trends integration**  
+   Weekly Google Trends values are merged with the daily Bitcoin market data.
 
-4. **Exploratory data analysis (EDA)**  
-   Time-series plots and descriptive exploration were used to inspect the relationship between attention and market behavior.
+3. **Trend value filling**  
+   Google Trends values are forward-filled across daily observations within the valid Google Trends period.
 
-5. **Hypothesis testing**  
-   Correlation analysis and statistical comparison between high-trend and low-trend periods were performed.
+4. **Fear & Greed data collection**  
+   Daily Crypto Fear & Greed Index values are downloaded and cleaned.
 
-6. **Machine learning**  
-   Logistic Regression and Random Forest classifiers were trained to predict next-day Bitcoin direction.
+5. **Feature engineering**  
+   Market, attention, sentiment, lagged, rolling, and target variables are created.
+
+6. **Exploratory data analysis**  
+   Time-series plots, scatter plots, grouped comparisons, and correlation visualizations are generated.
+
+7. **Hypothesis testing**  
+   Statistical tests examine relationships between attention/sentiment indicators and Bitcoin returns or volatility.
+
+8. **Machine learning modeling**  
+   Logistic Regression and Random Forest models are compared using multiple feature sets.
+
+9. **Result interpretation**  
+   Model performance and statistical findings are interpreted in relation to the research question.
 
 ---
 
@@ -107,7 +149,8 @@ DSA210Project-Spring-26/
 ├── data/
 │   ├── raw/
 │   │   ├── btc-usd-max.csv
-│   │   └── google_trends_bitcoin.csv
+│   │   ├── google_trends_bitcoin.csv
+│   │   └── fear_greed_index_raw.csv
 │   │
 │   ├── processed/
 │   │   ├── bitcoin_market_clean.csv
@@ -116,27 +159,44 @@ DSA210Project-Spring-26/
 │   │   └── bitcoin_features.csv
 │   │
 │   └── outputs/
+│       ├── fear_greed_index.csv
+│       ├── feature_summary.csv
+│       ├── hypothesis_test_results.csv
 │       ├── ml_results_summary.csv
 │       ├── model_accuracy_comparison.png
+│       ├── model_f1_comparison.png
+│       ├── model_roc_auc_comparison.png
 │       ├── plot_price.png
 │       ├── plot_trends.png
-│       └── plot_trends_vs_return.png
+│       ├── plot_trends_vs_return.png
+│       ├── plot_trends_vs_volatility.png
+│       ├── plot_fear_greed.png
+│       ├── plot_fear_greed_vs_return.png
+│       ├── plot_correlation_matrix.png
+│       ├── random_forest_feature_importance.csv
+│       └── random_forest_feature_importance.png
 │
 ├── src/
 │   ├── prepare_market_data.py
 │   ├── merge_with_trends.py
 │   ├── fill_trends.py
+│   ├── fetch_fear_greed.py
 │   ├── feature_engineering.py
 │   ├── results_table.py
 │   └── results_plot.py
 │
 ├── notebooks/
-│   ├── eda.py
 │   ├── hypothesis_test.py
-│   ├── ml_model.py
-│   ├── ml_compare.py
-│   └── plots.py
+│   ├── plots.py
+│   └── ml_compare.py
 │
+├── reports/
+│   ├── final_report.md
+│   ├── hypothesis_test_report.md
+│   ├── ml_detailed_report.md
+│   └── ml_results_summary.md
+│
+├── AI_Usage_Disclosure.md
 ├── Project_proposal.pdf
 ├── README.md
 └── requirements.txt
@@ -144,67 +204,7 @@ DSA210Project-Spring-26/
 
 ---
 
-## Pipeline
-
-### 1. Prepare market data
-Cleans the raw CoinGecko export and creates a daily Bitcoin market dataset.
-
-```bash
-python src/prepare_market_data.py
-```
-
-### 2. Merge Google Trends
-Merges weekly Google Trends data into the cleaned Bitcoin market data.
-
-```bash
-python src/merge_with_trends.py
-```
-
-### 3. Fill Google Trends values
-Keeps only the period where Google Trends data exists and forward-fills missing weekly values across daily observations.
-
-```bash
-python src/fill_trends.py
-```
-
-### 4. Feature engineering
-Creates:
-- daily return
-- 7-day rolling volatility
-- price change
-- trends change
-- next-day binary target
-
-```bash
-python src/feature_engineering.py
-```
-
-### 5. Exploratory analysis and visualization
-```bash
-python notebooks/eda.py
-python notebooks/plots.py
-python notebooks/hypothesis_test.py
-```
-
-### 6. Machine learning
-Two classification models are used:
-- Logistic Regression
-- Random Forest
-
-```bash
-python notebooks/ml_model.py
-python notebooks/ml_compare.py
-```
-
-### 7. Export summary results
-```bash
-python src/results_table.py
-python src/results_plot.py
-```
-
----
-
-## How to Run
+## Setup
 
 Install dependencies:
 
@@ -212,65 +212,144 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Then run the pipeline in order:
+The project was developed in Python. All analysis scripts are located in `src/` and `notebooks/`.
+
+---
+
+## Reproducible Pipeline
+
+Run the scripts in the following order:
 
 ```bash
 python src/prepare_market_data.py
 python src/merge_with_trends.py
 python src/fill_trends.py
+python src/fetch_fear_greed.py
 python src/feature_engineering.py
-python notebooks/eda.py
-python notebooks/plots.py
 python notebooks/hypothesis_test.py
-python notebooks/ml_model.py
+python notebooks/plots.py
 python notebooks/ml_compare.py
 python src/results_table.py
 python src/results_plot.py
 ```
 
+The final processed datasets are saved under:
+
+```text
+data/processed/
+```
+
+The final tables, figures, and model outputs are saved under:
+
+```text
+data/outputs/
+reports/
+```
+
 ---
 
-## Current Milestone Scope
-For the current milestone, the repository includes:
-- data collection
-- data cleaning and preprocessing
-- exploratory data analysis
-- hypothesis testing
-- initial machine learning evaluation
+## Features Used in Modeling
 
-This is consistent with the course timeline for the milestone covering **data collection, EDA, and hypothesis testing**, while also documenting the ongoing machine learning stage already implemented in the repository.
+### Market-based features
+
+- price,
+- market capitalization,
+- total trading volume,
+- daily return,
+- log return,
+- rolling volatility,
+- moving averages,
+- volume change,
+- lagged return features.
+
+### Public attention features
+
+- Google Trends score,
+- Google Trends change,
+- lagged Google Trends variables,
+- rolling Google Trends features.
+
+### Sentiment features
+
+- Fear & Greed Index value,
+- Fear & Greed change,
+- lagged Fear & Greed variables,
+- rolling Fear & Greed features.
+
+### Target variable
+
+- `target_up_next_day`: binary target indicating whether Bitcoin price increased the following day.
+- `target_high_volatility_next_7d`: binary target indicating whether the next 7-day volatility is high.
 
 ---
 
-## Current Interpretation
-The results suggest that predicting next-day Bitcoin direction remains difficult. Market-based variables are more informative than Google Trends variables, and public search interest alone does not appear to provide useful predictive power for short-term price direction.
+## Outputs
 
-However, Google Trends does appear to be associated with increased market volatility, which may indicate that public attention is more reflective of market excitement or stress than of directional momentum.
+Key generated outputs include:
+
+```text
+data/processed/bitcoin_features.csv
+data/outputs/hypothesis_test_results.csv
+data/outputs/ml_results_summary.csv
+data/outputs/model_accuracy_comparison.png
+data/outputs/model_f1_comparison.png
+data/outputs/model_roc_auc_comparison.png
+data/outputs/random_forest_feature_importance.png
+reports/hypothesis_test_report.md
+reports/ml_detailed_report.md
+reports/ml_results_summary.md
+```
 
 ---
 
 ## Limitations
-- Google Trends measures attention, not true sentiment.
-- The project currently uses Google Trends only; no news or social-media sentiment is included in the final modeling.
-- Evaluation is based on a single train/test split.
-- More advanced time-series validation could improve robustness.
+
+- Google Trends measures search attention, not actual investor intent.
+- Fear & Greed Index is a market sentiment proxy, but it does not directly measure individual investor decisions.
+- Google Trends data is weekly in the exported file and had to be aligned with daily market data.
+- The models use historical features and cannot fully capture sudden news shocks or unexpected market events.
+- Short-term Bitcoin direction is inherently noisy and difficult to predict.
+- The current modeling setup uses relatively simple classifiers; more advanced time-aware models may improve robustness.
 
 ---
 
 ## Future Work
-- Add GDELT-based news features
-- Add lagged versions of Google Trends variables
-- Use time-series cross-validation
-- Test additional models and evaluation metrics
-- Add a summary notebook to the `notebooks/` folder
+
+- Add stable news-intensity features from a reliable archived news dataset or API.
+- Apply time-series cross-validation.
+- Test additional time-aware models.
+- Explore separate volatility prediction models.
+- Compare attention and sentiment indicators across multiple cryptocurrencies.
+
+---
+
+## Response to Peer Feedback
+
+Based on peer feedback, the project was strengthened in three main ways:
+
+1. **Originality**  
+   The project was reframed from a simple Bitcoin direction prediction task into a broader analysis of public attention, market sentiment, direction prediction, and volatility behavior.
+
+2. **Dataset enrichment**  
+   In addition to CoinGecko market data and Google Trends attention data, the final project adds the Alternative.me Crypto Fear & Greed Index as a third sentiment-based data source.
+
+3. **Analytical interpretation**  
+   Visualizations, hypothesis tests, and machine learning outputs were expanded to emphasize interpretation. The final analysis highlights that attention and sentiment variables are more informative for understanding volatility and market turbulence than for reliably predicting next-day direction.
 
 ---
 
 ## References
-- CoinGecko Bitcoin historical export
-- Google Trends search interest data for the keyword **Bitcoin**
+
+- CoinGecko historical Bitcoin market data.
+- Google Trends search interest data for the keyword “Bitcoin”.
+- Alternative.me Crypto Fear & Greed Index.
 
 ---
 
 ## AI Usage Disclosure
-AI tools were used for limited writing assistance, wording refinement, and README organization. The project idea, coding decisions, analysis flow, and interpretation were carried out by the student. Any AI-assisted edits should be considered editorial support rather than replacement of the actual project work.
+
+AI tools were used for documentation revision, coding support, debugging support, and repository organization. The final processed datasets, statistical test outputs, figures, and machine learning results were generated locally by running the project scripts. Full details are provided in:
+
+```text
+AI_Usage_Disclosure.md
+```
