@@ -1,0 +1,9 @@
+feature,importance
+trends_rolling_mean_7d,0.19046484314179224
+google_trends_score,0.16287067299870575
+trends_rolling_std_7d,0.14645098070608423
+trends_lag_1,0.1314741404548497
+trends_lag_7,0.1208260198979765
+trends_change_lag_1,0.10577552015863263
+trends_pct_change,0.08983225032413573
+trends_change,0.052305572317823144
