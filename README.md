@@ -191,7 +191,8 @@ DSA210Project-Spring-26/
 │   └── ml_compare.py
 │
 ├── reports/
-│   ├── final_report.md
+│   ├── DSA210_Bitcoin_Final_Report.docx
+│   ├── DSA210_Project_Report.pdf
 │   ├── hypothesis_test_report.md
 │   ├── ml_detailed_report.md
 │   └── ml_results_summary.md
