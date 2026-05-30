@@ -192,7 +192,7 @@ DSA210Project-Spring-26/
 │
 ├── reports/
 │   ├── DSA210_Bitcoin_Final_Report.docx
-│   ├── DSA210_Project_Report.pdf
+│   ├── DSA210_Bitcoin_Final_Report.pdf
 │   ├── hypothesis_test_report.md
 │   ├── ml_detailed_report.md
 │   └── ml_results_summary.md
