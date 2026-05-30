@@ -29,6 +29,32 @@ AI assistance was used for the following support tasks:
 5. **Writing and presentation support**
    - improving written explanations of statistical tests, figures, machine learning outputs, and project limitations.
 
+## Example AI prompts and outputs
+
+The following are representative examples of AI-assisted interactions used during the project:
+
+1. **Documentation revision**
+   - Example prompt: “Can you help me revise my README according to the DSA210 project guidelines?”
+   - Output used: Suggestions for improving README organization, wording, project overview, limitations, future work, and reproducibility instructions.
+
+2. **Repository organization**
+   - Example prompt: “Which files should remain in the final GitHub repository, and which files should be removed?”
+   - Output used: Suggestions to keep active scripts, generated outputs, reports, and requirements.txt, while removing temporary files such as virtual environment folders and Word lock files.
+
+3. **Debugging support**
+   - Example prompt: “I received a missing dependency error while running hypothesis_test.py. How can I fix it?”
+   - Output used: Explanation that the missing package should be added to requirements.txt and installed locally.
+
+4. **Pipeline support**
+   - Example prompt: “What order should I run the scripts in to regenerate processed data and outputs?”
+   - Output used: A reproducible script execution order for preparing market data, merging Google Trends, downloading Fear & Greed data, feature engineering, hypothesis testing, plotting, machine learning comparison, and result generation.
+
+5. **Report writing support**
+   - Example prompt: “Can you help me structure the final report according to the project guideline?”
+   - Output used: Suggested report structure and wording for sections such as motivation, data sources, data analysis, findings, limitations, future work, ethics, and AI usage disclosure.
+
+All AI-generated suggestions were reviewed and edited by the student before inclusion. No AI-generated output was accepted without local execution, verification, and student approval.
+
 ## What AI did not do
 
 AI did not independently collect the final datasets. The final processed datasets, statistical test outputs, figures, and machine learning results were generated locally by running the project scripts on the student's computer.
